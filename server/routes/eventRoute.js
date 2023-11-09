@@ -2,7 +2,6 @@ const router = require("express").Router();
 const Event = require("../models/Event");
 const handleError = require("../utils/eventErrors")
 
-
 router.get("/", async(req, res)=>{
 
     const events = await Event.find({});
@@ -31,6 +30,17 @@ router.get("/:id/show", async(req, res)=>{
 });
 
 
+router.post('/api/events', async (req, res) => {
+  const event = new Event(req.body);
+
+  try {
+    await event.save();
+
+    res.status(201).json(event);
+  } catch (err) {
+    // Handle the error
+  }
+});
 
 router.post("/", async(req, res)=>{
    
